@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDropzone } from 'react-dropzone';
 import {
     Upload, FileText, CheckCircle, XCircle,
     AlertCircle, Info, Trash2, Dna
 } from 'lucide-react';
+import { FileUpload } from '../components/ui/file-upload';
 
 interface VCFUploadProps {
     onFileAccepted: (file: File) => void;
@@ -43,30 +43,16 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
         }, 100);
     }, [onFileAccepted]);
 
-    const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: any[]) => {
-        if (rejectedFiles.length > 0) {
-            const rejection = rejectedFiles[0];
-            if (rejection.errors[0]?.code === 'file-invalid-type') {
-                setFileError('Invalid file type. Only .vcf files are accepted.');
-            } else if (rejection.errors[0]?.code === 'file-too-large') {
-                setFileError('File is too large. Maximum size is 5MB.');
-            } else {
-                setFileError('File rejected. Please check the format and size.');
-            }
-            return;
+    const handleDropRejected = (rejections: any[]) => {
+        const rejection = rejections[0];
+        if (rejection?.errors[0]?.code === 'file-invalid-type') {
+            setFileError('Invalid file type. Only .vcf files are accepted.');
+        } else if (rejection?.errors[0]?.code === 'file-too-large') {
+            setFileError('File is too large. Maximum size is 5MB.');
+        } else {
+            setFileError('File rejected. Please check the format and size.');
         }
-
-        if (acceptedFiles.length > 0) {
-            processFile(acceptedFiles[0]);
-        }
-    }, [processFile]);
-
-    const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
-        onDrop,
-        accept: { 'text/plain': ['.vcf'], 'application/octet-stream': ['.vcf'] },
-        maxSize: 5 * 1024 * 1024,
-        multiple: false,
-    });
+    };
 
     const clearFile = () => {
         setUploadedFile(null);
@@ -83,15 +69,13 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
     };
 
     const getBorderColor = () => {
-        if (isDragReject || fileError) return 'var(--danger)';
-        if (isDragActive) return 'var(--primary)';
+        if (fileError) return 'var(--danger)';
         if (isSuccess) return 'var(--success)';
         return 'var(--border-hover)';
     };
 
     const getBgColor = () => {
-        if (isDragReject || fileError) return 'var(--danger-light)';
-        if (isDragActive) return 'var(--primary-light)';
+        if (fileError) return 'var(--danger-light)';
         if (isSuccess) return 'var(--success-light)';
         return 'var(--bg-muted)';
     };
@@ -170,16 +154,14 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
+                {/* Outer styled wrapper — keeps the old dark bg + dashed border */}
                 <div
-                    {...getRootProps()}
-                    className="cursor-pointer rounded-2xl transition-all duration-300 p-8 sm:p-12 text-center"
+                    className="rounded-2xl overflow-hidden transition-all duration-300"
                     style={{
                         border: `2px dashed ${getBorderColor()}`,
                         background: getBgColor(),
                     }}
                 >
-                    <input {...getInputProps()} />
-
                     <AnimatePresence mode="wait">
                         {isSuccess && uploadedFile ? (
                             <motion.div
@@ -187,7 +169,7 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="space-y-4"
+                                className="p-12 text-center space-y-4"
                             >
                                 <div
                                     className="mx-auto w-16 h-16 rounded-full flex items-center justify-center"
@@ -201,7 +183,13 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                                 </div>
                             </motion.div>
                         ) : isUploading ? (
-                            <motion.div key="uploading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+                            <motion.div
+                                key="uploading"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="p-12 text-center space-y-4"
+                            >
                                 <motion.div
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
@@ -213,36 +201,21 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                                 <p className="font-medium" style={{ color: 'var(--primary)' }}>Parsing VCF File...</p>
                             </motion.div>
                         ) : (
-                            <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-                                <motion.div
-                                    animate={isDragActive ? { scale: 1.1, y: -5 } : { scale: 1, y: 0 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="mx-auto w-20 h-20 rounded-2xl flex items-center justify-center"
-                                    style={{
-                                        background: 'var(--primary-light)',
-                                        border: '1px solid var(--primary)',
+                            <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                                {/* Aceternity FileUpload animation — transparent bg so wrapper bg shows through */}
+                                <FileUpload
+                                    onChange={(files) => {
+                                        if (files.length > 0) {
+                                            setFileError('');
+                                            processFile(files[0]);
+                                        }
                                     }}
-                                >
-                                    <Upload size={32} style={{ color: isDragActive ? 'var(--primary)' : 'var(--text-muted)' }} />
-                                </motion.div>
-                                <div>
-                                    <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                                        {isDragActive ? 'Drop your VCF file here' : 'Drag & drop your VCF file'}
-                                    </p>
-                                    <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-                                        or <span style={{ color: 'var(--primary)', cursor: 'pointer' }}>browse from computer</span>
-                                    </p>
-                                </div>
-                                <div className="flex items-center justify-center gap-4 text-xs" style={{ color: 'var(--text-muted)' }}>
-                                    <span className="flex items-center gap-1">
-                                        <FileText size={12} />
-                                        .vcf files only
-                                    </span>
-                                    <span>•</span>
-                                    <span>Max 5MB</span>
-                                    <span>•</span>
-                                    <span>VCF v4.1 / v4.2</span>
-                                </div>
+                                    onDropRejected={handleDropRejected}
+                                    accept={{ 'text/plain': ['.vcf'], 'application/octet-stream': ['.vcf'] }}
+                                    maxSize={5 * 1024 * 1024}
+                                    header="Upload VCF File"
+                                    description="Drag or drop your .vcf file here or click to browse"
+                                />
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -264,10 +237,7 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                             <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--bg-muted)', border: '1px solid var(--border)' }}>
                                 <motion.div
                                     className="h-full rounded-full"
-                                    style={{
-                                        width: `${uploadProgress}%`,
-                                        background: '#0D7377',
-                                    }}
+                                    style={{ width: `${uploadProgress}%`, background: '#0D7377' }}
                                     transition={{ duration: 0.1 }}
                                 />
                             </div>
@@ -303,12 +273,12 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         className="mt-6 p-6 rounded-2xl"
-                            style={{
-                                background: 'var(--bg-surface)',
-                                border: '1px solid var(--border)',
-                                boxShadow: 'var(--shadow-sm)',
-                            }}
-                        >
+                        style={{
+                            background: 'var(--bg-surface)',
+                            border: '1px solid var(--border)',
+                            boxShadow: 'var(--shadow-sm)',
+                        }}
+                    >
                         <div className="flex items-center justify-between mb-4">
                             <h3 className="font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                                 <FileText size={16} style={{ color: 'var(--primary)' }} />

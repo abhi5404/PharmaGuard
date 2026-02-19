@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
+import LogoIcon from '../assets/LogoIcon';
 
 const Navbar: React.FC = () => {
     const { isDark, toggleTheme } = useTheme();
@@ -78,17 +79,10 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center justify-between h-16">
                     {/* Left — Logo */}
                     <Link to="/" className="flex items-center gap-2.5 group">
-                        <motion.div
-                            whileHover={{ rotateX: 10, rotateY: -12, scale: 1.06 }}
-                            transition={{ type: 'spring', stiffness: 260, damping: 18 }}
-                            className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-black text-sm transition-transform group-hover:scale-105"
-                            style={{ background: 'linear-gradient(135deg, #0D7377, #0A5C5F)', transformStyle: 'preserve-3d' }}
-                        >
-                            PG
-                        </motion.div>
-                        <div>
-                            <p className="font-bold text-sm leading-none" style={{ color: 'var(--text-primary)' }}>PharmaGuard</p>
-                            <p className="text-[9px] leading-tight" style={{ color: 'var(--text-secondary)' }}>Pharmacogenomics AI</p>
+                        <LogoIcon size={40} />
+                        <div className="transition-transform duration-300 group-hover:translate-x-0.5">
+                            <p className="font-black text-sm leading-none tracking-tight" style={{ color: 'var(--text-primary)' }}>PharmaGuard</p>
+                            <p className="text-[9px] leading-tight font-medium" style={{ color: 'var(--text-secondary)' }}>Pharmacogenomics AI</p>
                         </div>
                     </Link>
 
