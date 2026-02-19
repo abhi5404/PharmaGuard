@@ -23,21 +23,36 @@
     </filter>
   </defs>
 
+  <!-- Rounded square background -->
   <rect width="44" height="44" rx="10" ry="10" fill="url(#bg)"/>
+
+  <!-- Subtle border glow -->
   <rect width="44" height="44" rx="10" ry="10" fill="none"
         stroke="rgba(20,184,166,0.35)" stroke-width="1"/>
 
+  <!-- Shield outline (faint) -->
   <path d="M22 6 L8 11 v9 c0 7.7 6.3 13 14 13 s14-5.3 14-13 v-9 Z"
         fill="rgba(20,184,166,0.07)" stroke="rgba(20,184,166,0.18)" stroke-width="0.8"/>
 
-  <path d="M17 10 C17 10,20 12,20 15 C20 18,17 20,17 20 C17 20,20 22,20 25 C20 28,17 30,17 30"
+  <!-- DNA Double Helix — Left strand (sine wave) -->
+  <path d="M17 10
+           C 17 10, 20 12, 20 15
+           C 20 18, 17 20, 17 20
+           C 17 20, 20 22, 20 25
+           C 20 28, 17 30, 17 30"
         stroke="url(#strand1)" stroke-width="1.9"
         fill="none" stroke-linecap="round" filter="url(#glow)"/>
 
-  <path d="M27 10 C27 10,24 12,24 15 C24 18,27 20,27 20 C27 20,24 22,24 25 C24 28,27 30,27 30"
+  <!-- DNA Double Helix — Right strand (opposite phase) -->
+  <path d="M27 10
+           C 27 10, 24 12, 24 15
+           C 24 18, 27 20, 27 20
+           C 27 20, 24 22, 24 25
+           C 24 28, 27 30, 27 30"
         stroke="url(#strand2)" stroke-width="1.9"
         fill="none" stroke-linecap="round" filter="url(#glow)"/>
 
+  <!-- Hydrogen bond rungs -->
   <line x1="20" y1="12.5" x2="24" y2="12.5"
         stroke="rgba(34,211,238,0.65)" stroke-width="1.1" stroke-linecap="round"/>
   <line x1="17" y1="20" x2="27" y2="20"
@@ -45,6 +60,7 @@
   <line x1="20" y1="27.5" x2="24" y2="27.5"
         stroke="rgba(34,211,238,0.65)" stroke-width="1.1" stroke-linecap="round"/>
 
+  <!-- Node dots at key intersections -->
   <circle cx="20" cy="15"  r="2.1" fill="#22D3EE" opacity="0.95" filter="url(#glow)"/>
   <circle cx="24" cy="15"  r="2.1" fill="#14B8A6" opacity="0.95"/>
   <circle cx="17" cy="20"  r="2.2" fill="#14B8A6" opacity="1"    filter="url(#glow)"/>
@@ -52,5 +68,6 @@
   <circle cx="20" cy="25"  r="2.1" fill="#22D3EE" opacity="0.95"/>
   <circle cx="24" cy="25"  r="2.1" fill="#14B8A6" opacity="0.95" filter="url(#glow)"/>
 
+  <!-- Small cross / plus mark at shield tip -->
   <circle cx="22" cy="34.5" r="1.2" fill="rgba(20,184,166,0.5)"/>
 </svg>

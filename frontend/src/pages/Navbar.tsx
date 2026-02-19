@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import logoSrc from '../assets/pharma-guard-logo.svg';
 import {
-    Menu, X, Sun, Moon, LogIn, LogOut, User,
+    Menu, X, LogIn, LogOut, User,
     Upload, Pill, LayoutDashboard, Info, FileText,
     ChevronDown, Settings, History, Shield
 } from 'lucide-react';
@@ -10,7 +11,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 
 const Navbar: React.FC = () => {
-    const { isDark, toggleTheme } = useTheme();
+    useTheme(); // keeps dark class active
     const { user, isAuthenticated, logout } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
@@ -73,42 +74,29 @@ const Navbar: React.FC = () => {
         <nav
             className="sticky top-0 z-50 transition-all duration-300"
             style={{
-                background: isDark
-                    ? scrolled ? 'rgba(0, 4, 8, 0.92)' : 'rgba(0, 4, 8, 0.82)'
-                    : scrolled ? 'rgba(255, 255, 255, 0.92)' : 'rgba(240, 248, 255, 0.82)',
+                background: scrolled ? 'rgba(0, 4, 8, 0.92)' : 'rgba(0, 4, 8, 0.82)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
                 borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-                boxShadow: scrolled 
-                    ? isDark ? '0 4px 20px rgba(0,0,0,0.6)' : '0 4px 20px rgba(13,115,119,0.1)'
-                    : 'none',
+                boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.6)' : 'none',
                 height: scrolled ? '60px' : '72px'
             }}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
                 <div className="flex items-center justify-between h-full">
                     {/* Left — Logo */}
-                    <Link to="/" className="flex items-center gap-2.5 group perspective-1000">
+                    <Link to="/" className="flex items-center gap-2.5 group">
                         <motion.div
-                            whileHover={{ rotateY: 180 }}
-                            transition={{ type: 'spring', stiffness: 100, damping: 10 }}
-                            className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-sm relative"
-                            style={{ 
-                                background: 'linear-gradient(135deg, #0D7377, #0A5C5F)', 
-                                transformStyle: 'preserve-3d',
-                                boxShadow: '0 4px 12px rgba(13,115,119,0.3)'
-                            }}
+                            whileHover={{ scale: 1.08, rotate: 4 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                         >
-                            <span style={{ backfaceVisibility: 'hidden' }}>PG</span>
-                            <span 
-                                style={{ 
-                                    backfaceVisibility: 'hidden', 
-                                    transform: 'rotateY(180deg)',
-                                    position: 'absolute'
-                                }}
-                            >
-                                🧬
-                            </span>
+                            <img
+                                src={logoSrc}
+                                alt="PharmaGuard"
+                                className="w-10 h-10"
+                                style={{ filter: 'drop-shadow(0 2px 10px rgba(20,184,166,0.45))' }}
+                            />
                         </motion.div>
                         <div className="transition-transform duration-300 group-hover:translate-x-1">
                             <p className="font-black text-sm leading-none tracking-tight" style={{ color: 'var(--text-primary)' }}>PharmaGuard</p>
@@ -143,17 +131,6 @@ const Navbar: React.FC = () => {
                             <Shield size={10} />
                             CPIC Aligned
                         </div>
-
-                        {/* Theme Toggle */}
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={toggleTheme}
-                            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-                            style={{ background: 'var(--bg-muted)', color: 'var(--text-secondary)' }}
-                        >
-                            {isDark ? <Sun size={15} /> : <Moon size={15} />}
-                        </motion.button>
 
                         {/* Auth section */}
                         {isAuthenticated ? (
