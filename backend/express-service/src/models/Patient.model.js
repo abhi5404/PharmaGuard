@@ -5,8 +5,7 @@ const patientSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Patient ID is required'],
     unique: true,
-    trim: true,
-    index: true
+    trim: true
   },
   firstName: {
     type: String,
@@ -63,7 +62,6 @@ patientSchema.virtual('fullName').get(function() {
 
 // Index for searching
 patientSchema.index({ firstName: 1, lastName: 1 });
-patientSchema.index({ email: 1 });
 
 // Static method to find patient with records
 patientSchema.statics.findWithRecords = function(patientId) {
