@@ -160,12 +160,12 @@ pharmaGuardRecordSchema.statics.getRecentRecords = function(limit = 10) {
 };
 
 // Pre-save middleware to update processing status
-pharmaGuardRecordSchema.pre('save', function(next) {
-  if (this.isNew) {
-    this.processingStatus = 'pending';
-  }
-  next();
-});
+// pharmaGuardRecordSchema.pre('save', function(next) {
+//   if (this.isNew) {
+//     this.processingStatus = 'pending';
+//   }
+//   next();
+// });
 
 const PharmaGuardRecord = mongoose.model('PharmaGuardRecord', pharmaGuardRecordSchema);
 

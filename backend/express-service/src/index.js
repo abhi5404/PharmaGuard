@@ -4,15 +4,13 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const connectDB = require('./config/database');
-
+dotenv.config();
 // Import routes
 const uploadRoutes = require('./routes/upload.routes');
 
-// Load environment variables
-dotenv.config();
-
-// Connect to MongoDB
 connectDB();
+// Load environment variables
+
 
 const app = express();
 
