@@ -5,6 +5,9 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const connectDB = require('./config/database');
 
+// Import routes
+const uploadRoutes = require('./routes/upload.routes');
+
 // Load environment variables
 dotenv.config();
 
@@ -29,7 +32,13 @@ app.get('/', (req, res) => {
     message: 'Welcome to PharmaGuard Express API',
     service: 'Express.js',
     version: '1.0.0',
-    database: 'MongoDB'
+    database: 'MongoDB',
+    endpoints: {
+      upload: 'POST /api/v1/upload',
+      records: 'GET /api/v1/records',
+      patientRecord: 'GET /api/v1/records/:patientId',
+      status: 'GET /api/v1/records/:recordId/status'
+    }
   });
 });
 
@@ -42,6 +51,9 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// API Routes
+app.use('/api/v1', uploadRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
