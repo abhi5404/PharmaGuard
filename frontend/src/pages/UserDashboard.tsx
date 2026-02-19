@@ -98,7 +98,7 @@ const UserDashboard: React.FC = () => {
                                 whileHover={{ scale: 1.03 }}
                                 whileTap={{ scale: 0.97 }}
                                 className="px-5 py-2.5 rounded-xl text-sm font-semibold"
-                                style={{ background: 'rgba(255,255,255,0.15)', color: 'white', border: '1px solid rgba(255,255,255,0.3)' }}
+                                style={{ background: 'var(--bg-surface)', color: 'var(--primary)' }}
                             >
                                 + New Analysis
                             </motion.button>
@@ -151,9 +151,9 @@ const UserDashboard: React.FC = () => {
                                         </linearGradient>
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-                                    <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#9CA3AF' }} />
-                                    <YAxis tick={{ fontSize: 10, fill: '#9CA3AF' }} domain={[0, 100]} />
-                                    <Tooltip contentStyle={{ fontSize: 11, borderRadius: 12, border: '1px solid #E5E7EB' }} />
+                                    <XAxis dataKey="name" tick={{ fontSize: 10, fill: 'var(--text-muted)' }} />
+                                    <YAxis tick={{ fontSize: 10, fill: 'var(--text-muted)' }} domain={[0, 100]} />
+                                    <Tooltip contentStyle={{ fontSize: 11, borderRadius: 12, border: '1px solid var(--border)', background: 'var(--bg-surface)', color: 'var(--text-primary)' }} />
                                     <Area type="monotone" dataKey="riskScore" stroke="#0D7377" strokeWidth={2} fill="url(#riskGradient)" />
                                     <Line type="monotone" dataKey="confidence" stroke="#E8645A" strokeWidth={1.5} strokeDasharray="4 4" dot={false} />
                                 </AreaChart>
@@ -212,7 +212,7 @@ const UserDashboard: React.FC = () => {
                     {filteredAnalyses.length === 0 ? (
                         <div className="text-center py-16">
                             <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
-                                style={{ background: 'var(--bg-muted)', border: '1px solid var(--border)' }}>
+                                style={{ background: 'var(--bg-muted)' }}>
                                 <Pill size={24} style={{ color: 'var(--text-muted)' }} />
                             </div>
                             <p className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
@@ -226,7 +226,7 @@ const UserDashboard: React.FC = () => {
                                     <motion.button
                                         whileHover={{ scale: 1.03 }}
                                         className="mt-4 px-5 py-2 rounded-xl text-xs font-semibold text-white"
-                                        style={{ background: '#0D7377' }}
+                                        style={{ background: 'var(--primary)' }}
                                     >
                                         Start First Analysis
                                     </motion.button>
@@ -250,7 +250,7 @@ const UserDashboard: React.FC = () => {
                                         {/* Top row */}
                                         <div className="flex items-center justify-between mb-3">
                                             <div className="flex items-center gap-2">
-                                                <ShieldCheck size={14} style={{ color: '#0D7377' }} />
+                                                <ShieldCheck size={14} style={{ color: 'var(--primary)' }} />
                                                 <span className="text-xs font-mono font-medium" style={{ color: 'var(--text-primary)' }}>
                                                     {analysis.sampleId}
                                                 </span>
@@ -259,7 +259,7 @@ const UserDashboard: React.FC = () => {
                                         </div>
 
                                         {/* Date */}
-                                        <p className="text-[10px] mb-2 flex items-center gap-1" style={{ color: '#9CA3AF' }}>
+                                        <p className="text-[10px] mb-2 flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
                                             <Clock size={10} />
                                             {new Date(analysis.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                         </p>
@@ -268,12 +268,12 @@ const UserDashboard: React.FC = () => {
                                         <div className="flex flex-wrap gap-1 mb-3">
                                             {analysis.drugsAnalyzed.slice(0, 4).map(d => (
                                                 <span key={d} className="px-1.5 py-0.5 rounded text-[9px] font-medium"
-                                                    style={{ background: 'var(--primary-light)', color: 'var(--primary)' }}>
+                                                style={{ background: 'var(--primary-light)', color: 'var(--primary)' }}>
                                                     {d}
                                                 </span>
                                             ))}
                                             {analysis.drugsAnalyzed.length > 4 && (
-                                                <span className="px-1.5 py-0.5 rounded text-[9px]" style={{ background: 'var(--bg-muted)', color: 'var(--text-muted)' }}>
+                                                <span className="px-1.5 py-0.5 rounded text-[9px]" style={{ background: 'var(--bg-muted)', color: 'var(--text-secondary)' }}>
                                                     +{analysis.drugsAnalyzed.length - 4}
                                                 </span>
                                             )}
@@ -283,7 +283,7 @@ const UserDashboard: React.FC = () => {
                                         <div className="flex items-center gap-2" style={{ borderTop: '1px solid var(--border)', paddingTop: '0.5rem' }}>
                                             <Link to={`/report/${analysis.id}`} className="flex-1">
                                                 <button className="w-full flex items-center justify-center gap-1 py-1.5 rounded-lg text-[10px] font-semibold transition-colors"
-                                                    style={{ color: 'var(--primary)', background: 'var(--primary-light)', border: '1px solid var(--primary)' }}>
+                                                    style={{ color: 'var(--primary)', background: 'var(--primary-light)' }}>
                                                     <Eye size={11} /> View
                                                 </button>
                                             </Link>
