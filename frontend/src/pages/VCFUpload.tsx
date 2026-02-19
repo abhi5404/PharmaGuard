@@ -5,6 +5,7 @@ import {
     AlertCircle, Info, Trash2, Dna
 } from 'lucide-react';
 import { FileUpload } from '../components/ui/file-upload';
+import { GlowingEffect } from '../components/ui/glowing-effect';
 
 interface VCFUploadProps {
     onFileAccepted: (file: File) => void;
@@ -272,13 +273,14 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="mt-6 p-6 rounded-2xl"
+                        className="relative mt-6 p-6 rounded-2xl"
                         style={{
                             background: 'var(--bg-surface)',
                             border: '1px solid var(--border)',
                             boxShadow: 'var(--shadow-sm)',
                         }}
                     >
+                        <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                         <div className="flex items-center justify-between mb-4">
                             <h3 className="font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                                 <FileText size={16} style={{ color: 'var(--primary)' }} />

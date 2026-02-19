@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Brain, ArrowRight, Dna, Info, Lock, Eye, EyeOff, Users } from 'lucide-react';
 import { GENOMIC_TIMELINE_STEPS, MOCK_GENES, Gene, MOCK_ANALYSIS_RESULT, RISK_COLORS } from '../utils/mockData';
 import GeneModal from './GeneModal';
+import { GlowingEffect } from '../components/ui/glowing-effect';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -89,6 +90,7 @@ export const GenomicTimeline: React.FC = () => {
             className="rounded-2xl overflow-hidden relative"
             style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}
         >
+            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
             <div className="p-6 relative" ref={containerRef}>
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
@@ -197,9 +199,10 @@ export const GeneExplorer: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="rounded-2xl p-6"
+                className="relative rounded-2xl p-6"
                 style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}
             >
+                <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                 <div className="flex items-center gap-2 mb-5">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center"
                         style={{ background: 'var(--primary-light)', border: '1px solid var(--border)' }}>
@@ -264,9 +267,10 @@ export const ComplianceBadges: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="rounded-2xl p-6"
+            className="relative rounded-2xl p-6"
             style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}
         >
+            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
             <h3 className="font-bold text-sm mb-1" style={{ color: 'var(--text-primary)' }}>Audit & Compliance Certificates</h3>
             <p className="text-[10px] mb-5" style={{ color: 'var(--text-muted)' }}>All standards verified for clinical research use</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -277,12 +281,13 @@ export const ComplianceBadges: React.FC = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: i * 0.05 }}
                         whileHover={{ scale: 1.04, y: -2 }}
-                        className="p-4 rounded-2xl text-xs cursor-default transition-all duration-200"
+                        className="relative p-4 rounded-2xl text-xs cursor-default transition-all duration-200"
                         style={{
                             background: `${badge.color}06`,
                             border: `1px solid ${badge.color}18`,
                         }}
                     >
+                        <GlowingEffect spread={25} glow={true} disabled={false} proximity={48} inactiveZone={0.01} />
                         <div className="text-2xl mb-2">{badge.icon}</div>
                         <p className="font-semibold mb-1 leading-tight" style={{ color: badge.color }}>{badge.label}</p>
                         <p className="text-[9px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>{badge.desc}</p>
@@ -368,9 +373,10 @@ export const MultiPatientSimulation: React.FC = () => {
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: pi * 0.12 }}
-                        className="rounded-2xl overflow-hidden"
+                        className="relative rounded-2xl overflow-hidden"
                         style={{ border: '1px solid var(--border)', background: 'var(--bg-surface)' }}
                     >
+                        <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                         {/* Patient header */}
                         <div className="px-4 py-3"
                             style={{
@@ -425,9 +431,10 @@ export const MultiPatientSimulation: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="p-4 rounded-xl text-xs"
+                className="relative p-4 rounded-xl text-xs"
                 style={{ background: '#F5F3FF', border: '1px solid #EDE9FE' }}
             >
+                <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                 <p className="font-semibold mb-1.5" style={{ color: '#7C3AED' }}>Key Risk Differences Detected</p>
                 <div className="space-y-1" style={{ color: 'var(--text-secondary)' }}>
                     <p>• <strong style={{ color: 'var(--text-primary)' }}>Codeine</strong>: Patient A → Toxic (CYP2D6 UM) vs Patient B → Ineffective (CYP2D6 PM)</p>
@@ -452,9 +459,10 @@ export const AIExplainabilityPanel: React.FC = () => {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl p-6"
+            className="relative rounded-2xl p-6"
             style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}
         >
+            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
             <div className="flex items-center gap-2 mb-4">
                 <Brain size={15} style={{ color: 'var(--primary)' }} />
                 <h3 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>AI Pathway Summary</h3>

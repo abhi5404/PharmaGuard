@@ -5,6 +5,7 @@ import {
     Shield, Clock, Info, Pill, ChevronRight
 } from 'lucide-react';
 import { MOCK_ANALYSIS_RESULT, RISK_COLORS } from '../utils/mockData';
+import { GlowingEffect } from '../components/ui/glowing-effect';
 
 const ALTERNATIVES: Record<string, { drug: string; reason: string; riskLevel: string }[]> = {
     CODEINE: [
@@ -107,9 +108,10 @@ const ClinicalDecisionPanel: React.FC = () => {
                         key={item.label}
                         initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
                         whileHover={{ scale: 1.04 }}
-                        className="p-3 rounded-xl text-center"
+                        className="relative p-3 rounded-xl text-center"
                         style={{ background: `${item.color}08`, border: `1px solid ${item.color}18` }}
                     >
+                        <GlowingEffect spread={30} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                         <div className="flex justify-center mb-1" style={{ color: item.color }}>{item.icon}</div>
                         <p className="text-xl font-black" style={{ color: item.color }}>{item.count}</p>
                         <p className="text-[9px]" style={{ color: 'var(--text-secondary)' }}>{item.label}</p>
@@ -131,13 +133,14 @@ const ClinicalDecisionPanel: React.FC = () => {
                             initial={{ opacity: 0, x: -8 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: i * 0.06 }}
-                            className="rounded-xl overflow-hidden"
+                            className="relative rounded-xl overflow-hidden"
                             style={{
                                 border: `1px solid ${rc}20`,
                                 background: 'var(--bg-surface)',
                                 boxShadow: 'var(--shadow-sm)',
                             }}
                         >
+                            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                             <button
                                 onClick={() => setExpandedDrug(isOpen ? null : drug.drug)}
                                 className="w-full px-4 py-3 flex items-center gap-3 transition-colors text-left"

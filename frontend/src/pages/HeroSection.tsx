@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Dna, Shield, Zap, Brain } from 'lucide-react';
+import { GlowingEffect } from '../components/ui/glowing-effect';
 
 interface HeroSectionProps {
     onAnalyze: () => void;
@@ -144,13 +145,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onAnalyze }) => {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.6 + i * 0.1 }}
                             whileHover={{ y: -2 }}
-                            className="p-4 text-center rounded-xl transition-all duration-200"
+                            className="relative p-4 text-center rounded-xl transition-all duration-200"
                             style={{
                                 background: 'var(--bg-surface)',
                                 border: '1px solid var(--border)',
                                 boxShadow: 'var(--shadow-sm)',
                             }}
                         >
+                            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                             <div className="flex justify-center mb-2" style={{ color: 'var(--primary)' }}>{stat.icon}</div>
                             <div className="text-xl font-black" style={{ color: 'var(--text-primary)' }}>{stat.value}</div>
                             <div className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>

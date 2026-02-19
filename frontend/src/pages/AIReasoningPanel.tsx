@@ -5,6 +5,7 @@ import {
     Brain, Dna, FlaskConical, AlertTriangle, Activity,
     ChevronDown, Zap, Info
 } from 'lucide-react';
+import { GlowingEffect } from '../components/ui/glowing-effect';
 
 interface PipelineNode {
     id: string;
@@ -115,13 +116,14 @@ const AIReasoningPanel: React.FC = () => {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl overflow-hidden"
+            className="relative rounded-2xl"
             style={{
                 background: 'var(--bg-surface)',
                 border: '1px solid var(--border)',
                 boxShadow: 'var(--shadow-sm)',
             }}
         >
+            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
             {/* Header */}
             <button
                 onClick={() => setIsExpanded(v => !v)}
@@ -179,12 +181,13 @@ const AIReasoningPanel: React.FC = () => {
                                             >
                                                 <motion.div
                                                     whileHover={{ scale: 1.04, y: -2 }}
-                                                    className="p-2.5 rounded-xl text-center select-none transition-all duration-200"
+                                                    className="relative p-2.5 rounded-xl text-center select-none transition-all duration-200"
                                                     style={{
                                                         background: activeNode === node.id ? `${node.color}10` : 'var(--bg-muted)',
                                                         border: `1px solid ${activeNode === node.id ? node.color + '40' : 'var(--border)'}`,
                                                     }}
                                                 >
+                                                    <GlowingEffect spread={20} glow={true} disabled={false} proximity={48} inactiveZone={0.01} />
                                                     <div
                                                         className="w-7 h-7 rounded-lg mx-auto mb-2 flex items-center justify-center"
                                                         style={{ background: `${node.color}12`, color: node.color }}
@@ -325,8 +328,9 @@ const AIReasoningPanel: React.FC = () => {
                             </div>
 
                             {/* Overall confidence */}
-                            <div className="flex items-center justify-between p-4 rounded-xl"
+                            <div className="relative flex items-center justify-between p-4 rounded-xl"
                                 style={{ background: 'var(--success-light)', border: '1px solid var(--border)' }}>
+                                <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                                 <div>
                                     <p className="text-xs font-bold" style={{ color: 'var(--success)' }}>Overall AI Confidence</p>
                                     <p className="text-[10px] mt-0.5" style={{ color: 'var(--text-secondary)' }}>Based on CPIC Grade A evidence + variant quality</p>

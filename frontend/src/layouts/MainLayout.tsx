@@ -20,15 +20,15 @@ const MainLayout: React.FC = () => {
 
             {/* ── Layer 2: DNA image ────────────────────────────────────────── */}
             <div
-                className="dna-bg-img fixed inset-0 z-[-2] pointer-events-none"
+                className="dna-bg-img dna-bg-movable fixed inset-0 z-[-2] pointer-events-none"
                 style={{
                     backgroundImage: `url(${isDark ? dnaDarkBg : dnaLightBg})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    backgroundSize: '116% 116%',
+                    backgroundPosition: '50% 50%',
                     backgroundRepeat: 'no-repeat',
-                    backgroundAttachment: 'fixed',
-                    opacity: isDark ? 0.64 : 0.60,
-                    filter: isDark ? 'blur(1.5px)' : 'none',
+                    backgroundAttachment: 'scroll',
+                    opacity: isDark ? 0.74 : 0.68,
+                    filter: isDark ? 'blur(1.2px) saturate(1.1)' : 'saturate(1.08)',
                     transition: 'opacity 0.6s ease, filter 0.6s ease',
                 }}
             />

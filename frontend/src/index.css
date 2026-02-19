@@ -316,8 +316,44 @@ nav {
   50%       { opacity: 0.58; }
 }
 
+@keyframes dna-drift {
+  0% {
+    background-position: 50% 50%;
+    transform: scale(1);
+  }
+  25% {
+    background-position: 55% 46%;
+    transform: scale(1.03);
+  }
+  50% {
+    background-position: 46% 55%;
+    transform: scale(1.05);
+  }
+  75% {
+    background-position: 54% 47%;
+    transform: scale(1.03);
+  }
+  100% {
+    background-position: 50% 50%;
+    transform: scale(1);
+  }
+}
+
 html.dark  .dna-bg-img { animation: dna-pulse       6s ease-in-out infinite; }
 html:not(.dark) .dna-bg-img { animation: dna-pulse-light 8s ease-in-out infinite; }
+
+.dna-bg-movable {
+  will-change: background-position, transform;
+  animation: dna-drift 14s ease-in-out infinite;
+}
+
+html.dark .dna-bg-movable {
+  animation: dna-pulse 5s ease-in-out infinite, dna-drift 13s ease-in-out infinite;
+}
+
+html:not(.dark) .dna-bg-movable {
+  animation: dna-pulse-light 7s ease-in-out infinite, dna-drift 12s ease-in-out infinite;
+}
 
 /* 3D navigation hover effect */
 .nav-link-3d {

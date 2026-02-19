@@ -5,6 +5,7 @@ import {
     AlertTriangle, CheckCircle, Info, XCircle, HelpCircle, Dna
 } from 'lucide-react';
 import { DrugRisk, RISK_COLORS, RISK_LABELS, SEVERITY_COLORS } from '../utils/mockData';
+import { GlowingEffect } from '../components/ui/glowing-effect';
 
 interface DrugCardProps {
     drug: DrugRisk;
@@ -34,7 +35,7 @@ const DrugCard: React.FC<DrugCardProps> = ({ drug, index, onViewJSON }) => {
             transition={{ delay: index * 0.08, duration: 0.5 }}
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
-            className="rounded-2xl overflow-hidden"
+            className="relative rounded-2xl"
             style={{
                 background: 'var(--bg-surface)',
                 border: `1px solid ${isHovered ? riskColor + '40' : 'var(--border)'}`,
@@ -45,6 +46,7 @@ const DrugCard: React.FC<DrugCardProps> = ({ drug, index, onViewJSON }) => {
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
         >
+            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
             {/* Card header - always visible */}
             <div className="p-5">
                 {/* Top row: drug name + risk label */}

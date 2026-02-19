@@ -5,6 +5,7 @@ import VCFUpload from './VCFUpload';
 import DrugInput from './DrugInput';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SupportedDrug } from '../utils/mockData';
+import { GlowingEffect } from '../components/ui/glowing-effect';
 const LandingPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -87,9 +88,10 @@ const LandingPage: React.FC = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: i * 0.15 }}
                             whileHover={{ y: -4 }}
-                            className="p-6 rounded-2xl text-center transition-all duration-200"
+                            className="relative p-6 rounded-2xl text-center transition-all duration-200"
                             style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}
                         >
+                            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                             <div className="text-4xl mb-4">{item.icon}</div>
                             <div className="text-xs font-mono mb-2 font-bold" style={{ color: item.color }}>STEP {item.step}</div>
                             <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
@@ -114,7 +116,8 @@ const LandingPage: React.FC = () => {
                             { type: 'Unsupported Drug', desc: 'Drug not in CPIC database.', solution: 'Returns "Unknown" label with PharmGKB link.', bgVar: 'var(--info-light)', borderVar: 'var(--info)', colorVar: 'var(--info)' },
                             { type: 'Network/API Error', desc: 'Analysis service unavailable.', solution: 'Fallback to cached CPIC guidelines with offline indicator.', bgVar: 'var(--bg-muted)', borderVar: 'var(--border)', colorVar: 'var(--text-secondary)' },
                         ].map((err) => (
-                            <div key={err.type} className="p-4 rounded-xl text-xs" style={{ background: err.bgVar, border: `1px solid ${err.borderVar}` }}>
+                            <div key={err.type} className="relative p-4 rounded-xl text-xs" style={{ background: err.bgVar, border: `1px solid ${err.borderVar}` }}>
+                                <GlowingEffect spread={30} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                                 <p className="font-semibold mb-1" style={{ color: err.colorVar }}>{err.type}</p>
                                 <p className="mb-2 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{err.desc}</p>
                                 <p className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>{err.solution}</p>
@@ -166,7 +169,7 @@ const LandingPage: React.FC = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.45, delay: i * 0.1 }}
                             whileHover={{ y: -6, rotateX: 7, rotateY: i % 2 === 0 ? -6 : 6 }}
-                            className="p-6 rounded-2xl"
+                            className="relative p-6 rounded-2xl"
                             style={{
                                 background: 'var(--bg-surface)',
                                 border: '1px solid var(--border)',
@@ -174,6 +177,7 @@ const LandingPage: React.FC = () => {
                                 transformStyle: 'preserve-3d',
                             }}
                         >
+                            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
                             <p className="text-[10px] font-bold tracking-wider mb-2" style={{ color: doc.color }}>{doc.tag}</p>
                             <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--text-primary)' }}>{doc.title}</h3>
                             <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{doc.desc}</p>
