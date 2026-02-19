@@ -4,13 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '../pages/Navbar';
 import Footer from '../pages/Footer';
 import { FloatingBadges } from '../pages/InnovativeFeatures';
-import { useTheme } from '../contexts/ThemeContext';
 import dnaDarkBg from '../assets/image copy.png';  // Black bg + blue glowing DNA — dark mode
-import dnaLightBg from '../assets/image.png';      // Vivid blue DNA — light mode
 
 const MainLayout: React.FC = () => {
     const location = useLocation();
-    const { isDark } = useTheme();
 
     return (
         <div className="min-h-screen flex flex-col relative overflow-hidden">
@@ -22,13 +19,13 @@ const MainLayout: React.FC = () => {
             <div
                 className="dna-bg-img dna-bg-movable fixed inset-0 z-[-2] pointer-events-none"
                 style={{
-                    backgroundImage: `url(${isDark ? dnaDarkBg : dnaLightBg})`,
+                    backgroundImage: `url(${dnaDarkBg})`,
                     backgroundSize: '116% 116%',
                     backgroundPosition: '50% 50%',
                     backgroundRepeat: 'no-repeat',
                     backgroundAttachment: 'scroll',
-                    opacity: isDark ? 0.74 : 0.68,
-                    filter: isDark ? 'blur(1.2px) saturate(1.1)' : 'saturate(1.08)',
+                    opacity: 0.74,
+                    filter: 'blur(1.2px) saturate(1.1)',
                     transition: 'opacity 0.6s ease, filter 0.6s ease',
                 }}
             />
@@ -37,9 +34,7 @@ const MainLayout: React.FC = () => {
             <div
                 className="fixed inset-0 z-[-1] pointer-events-none"
                 style={{
-                    background: isDark
-                        ? 'linear-gradient(135deg, rgba(0,0,0,0.42) 0%, rgba(0,4,10,0.36) 50%, rgba(0,0,0,0.42) 100%)'
-                        : 'linear-gradient(135deg, rgba(245,250,255,0.34) 0%, rgba(230,244,255,0.28) 50%, rgba(245,250,255,0.34) 100%)',
+                    background: 'linear-gradient(135deg, rgba(0,0,0,0.42) 0%, rgba(0,4,10,0.36) 50%, rgba(0,0,0,0.42) 100%)',
                     transition: 'background 0.6s ease',
                 }}
             />
@@ -48,9 +43,7 @@ const MainLayout: React.FC = () => {
             <div
                 className="fixed inset-0 z-[-1] pointer-events-none"
                 style={{
-                    background: isDark
-                        ? 'radial-gradient(ellipse at 50% 0%, rgba(13,115,119,0.08) 0%, transparent 60%)'
-                        : 'radial-gradient(ellipse at 50% 0%, rgba(13,115,119,0.06) 0%, transparent 60%)',
+                    background: 'radial-gradient(ellipse at 50% 0%, rgba(13,115,119,0.08) 0%, transparent 60%)',
                 }}
             />
 

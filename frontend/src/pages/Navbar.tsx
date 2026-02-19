@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
-    Menu, X, Sun, Moon, LogIn, LogOut, User,
+    Menu, X, LogIn, LogOut, User,
     Upload, Pill, LayoutDashboard, Info, FileText,
     ChevronDown, Settings, History, Shield
 } from 'lucide-react';
@@ -11,7 +11,7 @@ import { useAuth } from '../contexts/AuthContext';
 import LogoIcon from '../assets/LogoIcon';
 
 const Navbar: React.FC = () => {
-    const { isDark, toggleTheme } = useTheme();
+    useTheme();
     const { user, isAuthenticated, logout } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
@@ -64,15 +64,11 @@ const Navbar: React.FC = () => {
         <nav
             className="sticky top-0 z-50"
             style={{
-                background: isDark
-                    ? 'rgba(0, 4, 8, 0.82)'
-                    : 'rgba(240, 248, 255, 0.82)',
+                background: 'rgba(0, 4, 8, 0.82)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
                 borderBottom: '1px solid var(--border)',
-                boxShadow: isDark
-                    ? '0 1px 24px rgba(0,0,0,0.5)'
-                    : '0 1px 24px rgba(13,115,119,0.08)',
+                boxShadow: '0 1px 24px rgba(0,0,0,0.5)',
             }}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,17 +109,6 @@ const Navbar: React.FC = () => {
                             <Shield size={10} />
                             CPIC Aligned
                         </div>
-
-                        {/* Theme Toggle */}
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={toggleTheme}
-                            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-                            style={{ background: 'var(--bg-muted)', color: 'var(--text-secondary)' }}
-                        >
-                            {isDark ? <Sun size={15} /> : <Moon size={15} />}
-                        </motion.button>
 
                         {/* Auth section */}
                         {isAuthenticated ? (
