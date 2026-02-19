@@ -11,18 +11,26 @@ const connectDB = async () => {
   }
 
   try {
+    const mongoUri = process.env.MONGODB_URI;
+    
+    if (!mongoUri) {
+      throw new Error('MONGODB_URI environment variable is not defined');
+    }
+
+    console.log('🔄 Attempting MongoDB connection...');
+    console.log('URI format check:', mongoUri.substring(0, 25) + '...');
+
     const options = {
       bufferCommands: false, // Disable buffering for serverless
       serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
       socketTimeoutMS: 45000, // 45 seconds
       maxPoolSize: 10,
       minPoolSize: 2,
+      retryWrites: true,
+      w: 'majority'
     };
 
-    const conn = await mongoose.connect(
-      process.env.MONGODB_URI || 'mongodb://localhost:27017/pharma_guard',
-      options
-    );
+    const conn = await mongoose.connect(mongoUri, options);
 
     cachedConnection = conn;
     
@@ -32,6 +40,9 @@ const connectDB = async () => {
     return conn;
   } catch (error) {
     console.error(`❌ MongoDB Connection Error: ${error.message}`);
+    console.error(`❌ Error Code: ${error.code}`);
+    console.error(`❌ Error Name: ${error.name}`);
+    console.error(`❌ Full Error:`, error);
     cachedConnection = null;
     throw error; // Don't exit in serverless environment
   }

@@ -23,7 +23,8 @@ app.use(async (req, res, next) => {
     return res.status(503).json({
       success: false,
       error: 'Database connection failed',
-      message: 'Unable to connect to database. Please try again later.'
+      message: error.message || 'Unable to connect to database. Please try again later.',
+      details: process.env.NODE_ENV === 'development' ? error.toString() : undefined
     });
   }
 });
