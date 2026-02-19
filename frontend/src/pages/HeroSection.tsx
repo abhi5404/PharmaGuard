@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ChevronDown, Dna, Shield, Zap, Brain } from 'lucide-react';
-import TiltCard from '../components/TiltCard';
+import { CardSpotlight } from '../components/ui/card-spotlight';
+import { BackgroundLines } from '../components/ui/background-lines';
 
 interface HeroSectionProps {
     onAnalyze: () => void;
@@ -28,6 +29,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onAnalyze }) => {
     ];
 
     return (
+        <BackgroundLines className="relative" svgOptions={{ duration: 8 }}>
         <section
             id="hero"
             ref={containerRef}
@@ -185,21 +187,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onAnalyze }) => {
                 {/* Stats */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
                     {stats.map((stat, i) => (
-                        <TiltCard key={stat.label} tiltMax={15}>
+                        <CardSpotlight
+                            key={stat.label}
+                            className="rounded-xl"
+                            style={{
+                                background: 'var(--bg-surface)',
+                                border: '1px solid var(--border)',
+                                boxShadow: 'var(--shadow-sm)',
+                                backdropFilter: 'var(--backdrop)',
+                            }}
+                        >
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 transition={{ delay: 0.6 + i * 0.1 }}
                                 className="p-4 text-center rounded-xl transition-all duration-200 h-full"
-                                style={{
-                                    background: 'var(--bg-surface)',
-                                    border: '1px solid var(--border)',
-                                    boxShadow: 'var(--shadow-sm)',
-                                    backdropFilter: 'var(--backdrop)',
-                                }}
                             >
-                                <motion.div 
-                                    className="flex justify-center mb-2" 
+                                <motion.div
+                                    className="flex justify-center mb-2"
                                     style={{ color: 'var(--primary)' }}
                                     whileHover={{ scale: 1.2, rotate: 10 }}
                                 >
@@ -208,7 +213,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onAnalyze }) => {
                                 <div className="text-xl font-black" style={{ color: 'var(--text-primary)' }}>{stat.value}</div>
                                 <div className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
                             </motion.div>
-                        </TiltCard>
+                        </CardSpotlight>
                     ))}
                 </div>
             </motion.div>
@@ -224,6 +229,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onAnalyze }) => {
                 <ChevronDown size={24} />
             </motion.div>
         </section>
+        </BackgroundLines>
     );
 };
 

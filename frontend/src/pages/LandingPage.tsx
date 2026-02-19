@@ -5,7 +5,7 @@ import VCFUpload from './VCFUpload';
 import DrugInput from './DrugInput';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SupportedDrug } from '../utils/mockData';
-import TiltCard from '../components/TiltCard';
+import { CardSpotlight } from '../components/ui/card-spotlight';
 
 const LandingPage: React.FC = () => {
     const navigate = useNavigate();
@@ -110,21 +110,24 @@ const LandingPage: React.FC = () => {
                         { step: '02', title: 'Genotype Analysis', desc: 'Our AI engine calls diplotypes for 450+ pharmacogenes using CPIC star allele nomenclature.', icon: '⚗️', color: '#E8645A' },
                         { step: '03', title: 'Clinical Report', desc: 'Receive CPIC-aligned drug risk predictions with clinical recommendations for each medication.', icon: '📋', color: '#059669' },
                     ].map((item, i) => (
-                        <TiltCard key={item.step} tiltMax={10}>
+                        <CardSpotlight
+                            key={item.step}
+                            className="rounded-3xl"
+                            style={{
+                                background: 'var(--bg-surface)',
+                                border: '1px solid var(--border)',
+                                boxShadow: 'var(--shadow-sm)',
+                                backdropFilter: 'var(--backdrop)',
+                            }}
+                        >
                             <motion.div
                                 initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: i * 0.2 }}
                                 className="p-8 rounded-3xl text-center h-full flex flex-col items-center group"
-                                style={{ 
-                                    background: 'var(--bg-surface)', 
-                                    border: '1px solid var(--border)', 
-                                    boxShadow: 'var(--shadow-sm)',
-                                    backdropFilter: 'var(--backdrop)'
-                                }}
                             >
-                                <motion.div 
+                                <motion.div
                                     whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
                                     className="text-5xl mb-6 bg-white/50 w-20 h-20 rounded-2xl flex items-center justify-center shadow-inner"
                                 >
@@ -134,7 +137,7 @@ const LandingPage: React.FC = () => {
                                 <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
                                 <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
                             </motion.div>
-                        </TiltCard>
+                        </CardSpotlight>
                     ))}
                 </div>
 
@@ -154,26 +157,30 @@ const LandingPage: React.FC = () => {
                             { type: 'Unsupported Drug', desc: 'Drug not in CPIC database.', solution: 'Returns "Unknown" label with PharmGKB link.', bgVar: 'var(--info-light)', borderVar: 'var(--info)', colorVar: 'var(--info)' },
                             { type: 'Network/API Error', desc: 'Analysis service unavailable.', solution: 'Fallback to cached CPIC guidelines with offline indicator.', bgVar: 'var(--bg-muted)', borderVar: 'var(--border)', colorVar: 'var(--text-secondary)' },
                         ].map((err, i) => (
-                            <motion.div 
-                                key={err.type} 
-                                whileHover={{ scale: 1.02, y: -5 }}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="p-6 rounded-2xl text-xs relative overflow-hidden group" 
+                            <CardSpotlight
+                                key={err.type}
+                                className="rounded-2xl"
                                 style={{ background: err.bgVar, border: `1px solid ${err.borderVar}` }}
                             >
-                                <p className="font-bold text-sm mb-2" style={{ color: err.colorVar }}>{err.type}</p>
-                                <p className="mb-3 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{err.desc}</p>
-                                <p className="leading-relaxed font-medium" style={{ color: 'var(--text-primary)' }}>{err.solution}</p>
-                                <motion.div 
-                                    className="absolute -right-2 -bottom-2 opacity-10 group-hover:scale-150 transition-transform duration-500"
-                                    style={{ color: err.colorVar }}
+                                <motion.div
+                                    whileHover={{ scale: 1.02, y: -5 }}
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="p-6 rounded-2xl text-xs relative overflow-hidden group"
                                 >
-                                    <div className="text-4xl">⚠</div>
+                                    <p className="font-bold text-sm mb-2" style={{ color: err.colorVar }}>{err.type}</p>
+                                    <p className="mb-3 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{err.desc}</p>
+                                    <p className="leading-relaxed font-medium" style={{ color: 'var(--text-primary)' }}>{err.solution}</p>
+                                    <motion.div
+                                        className="absolute -right-2 -bottom-2 opacity-10 group-hover:scale-150 transition-transform duration-500"
+                                        style={{ color: err.colorVar }}
+                                    >
+                                        <div className="text-4xl">⚠</div>
+                                    </motion.div>
                                 </motion.div>
-                            </motion.div>
+                            </CardSpotlight>
                         ))}
                     </div>
                 </motion.div>
@@ -215,21 +222,24 @@ const LandingPage: React.FC = () => {
                             color: 'var(--success)',
                         },
                     ].map((doc, i) => (
-                        <TiltCard key={doc.title} tiltMax={12}>
+                        <CardSpotlight
+                            key={doc.title}
+                            className="rounded-3xl"
+                            style={{
+                                background: 'var(--bg-surface)',
+                                border: '1px solid var(--border)',
+                                boxShadow: 'var(--shadow-sm)',
+                                backdropFilter: 'var(--backdrop)',
+                            }}
+                        >
                             <motion.article
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: i * 0.15 }}
                                 className="p-8 rounded-3xl h-full flex flex-col group cursor-pointer"
-                                style={{
-                                    background: 'var(--bg-surface)',
-                                    border: '1px solid var(--border)',
-                                    boxShadow: 'var(--shadow-sm)',
-                                    backdropFilter: 'var(--backdrop)'
-                                }}
                             >
-                                <p className="text-[11px] font-black uppercase tracking-widest mb-4 inline-block px-3 py-1 rounded-full w-fit" 
+                                <p className="text-[11px] font-black uppercase tracking-widest mb-4 inline-block px-3 py-1 rounded-full w-fit"
                                    style={{ color: doc.color, background: `${doc.color}15` }}>{doc.tag}</p>
                                 <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>{doc.title}</h3>
                                 <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text-secondary)' }}>{doc.desc}</p>
@@ -237,7 +247,7 @@ const LandingPage: React.FC = () => {
                                     READ MORE <span className="group-hover:translate-x-1 transition-transform">→</span>
                                 </div>
                             </motion.article>
-                        </TiltCard>
+                        </CardSpotlight>
                     ))}
                 </div>
             </section>

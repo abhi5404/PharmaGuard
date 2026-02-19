@@ -2,9 +2,10 @@ import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import {
-    Upload, FileText, CheckCircle, XCircle,
-    AlertCircle, Info, Trash2, Dna
+    FileText, CheckCircle, XCircle,
+    AlertCircle, Info, Trash2, Dna, Upload
 } from 'lucide-react';
+import { FileUploadDropzone } from '../components/ui/file-upload';
 
 interface VCFUploadProps {
     onFileAccepted: (file: File) => void;
@@ -170,16 +171,14 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
-                <div
-                    {...getRootProps()}
-                    className="cursor-pointer rounded-2xl transition-all duration-300 p-8 sm:p-12 text-center"
-                    style={{
-                        border: `2px dashed ${getBorderColor()}`,
-                        background: getBgColor(),
-                    }}
+                <FileUploadDropzone
+                    isDragActive={isDragActive}
+                    isDragReject={isDragReject}
+                    isSuccess={isSuccess}
+                    isUploading={isUploading}
+                    rootProps={getRootProps()}
+                    inputProps={getInputProps()}
                 >
-                    <input {...getInputProps()} />
-
                     <AnimatePresence mode="wait">
                         {isSuccess && uploadedFile ? (
                             <motion.div
@@ -213,18 +212,7 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                                 <p className="font-medium" style={{ color: 'var(--primary)' }}>Parsing VCF File...</p>
                             </motion.div>
                         ) : (
-                            <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-                                <motion.div
-                                    animate={isDragActive ? { scale: 1.1, y: -5 } : { scale: 1, y: 0 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="mx-auto w-20 h-20 rounded-2xl flex items-center justify-center"
-                                    style={{
-                                        background: 'var(--primary-light)',
-                                        border: '1px solid var(--primary)',
-                                    }}
-                                >
-                                    <Upload size={32} style={{ color: isDragActive ? 'var(--primary)' : 'var(--text-muted)' }} />
-                                </motion.div>
+                            <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
                                 <div>
                                     <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
                                         {isDragActive ? 'Drop your VCF file here' : 'Drag & drop your VCF file'}
@@ -246,7 +234,7 @@ const VCFUpload: React.FC<VCFUploadProps> = ({ onFileAccepted }) => {
                             </motion.div>
                         )}
                     </AnimatePresence>
-                </div>
+                </FileUploadDropzone>
 
                 {/* Progress Bar */}
                 <AnimatePresence>
